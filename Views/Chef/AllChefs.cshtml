@@ -1,0 +1,49 @@
+@model List<Chef>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    @await Html.PartialAsync("_NavigationBar")
+
+    <div>
+        <h2>Check out our roster of chefs!</h2>
+        <br>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+                <th scope="col"># of Dishes</th>
+            </tr>
+        </thead>
+        <tbody>
+            @* Creating iteration to display all listed Chefs and their info *@
+            @foreach (Chef chef in ViewBag.CookedDishes)
+            {
+                <tr>
+                    <th scope="row">@chef.FirstName @chef.LastName</th>
+                    <th scope="row">
+                        @{
+                            @* Getting the birth year and storing it in a a birthday variable *@
+                            DateTime birthdate = (DateTime)chef.DateOfBirth;
+                            @* Deducting today's year from birth year and storing it in an age int variable *@
+                            int age = DateTime.Today.Year - birthdate.Year;
+                            if (birthdate.Date.AddYears(age) > DateTime.Today)
+                            {
+                                age--;
+                            }
+                        }
+                        @* Adding age as in int *@
+                        @age
+                    </th>
+                    <th>@chef.CookedDishes.Count</th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

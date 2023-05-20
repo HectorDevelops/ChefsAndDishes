@@ -1,0 +1,44 @@
+@model Dish
+
+@await Html.PartialAsync("_NavigationBar")
+
+<div class="text-center">
+    <h2>Add a Dish</h2>
+    <hr>
+</div>
+<div>
+    <form asp-controller="Dish" asp-action="Create" method="POST">
+        <div>
+            <label asp-for="Name"></label>
+            <span asp-validation-for="Name"></span>
+            <input asp-for="Name" />
+        </div>
+        <div>
+            <label asp-for="Calories"></label>
+            <span asp-validation-for="Calories"></span>
+            <input asp-for="Calories" />
+        </div>
+        <div>
+            <label asp-for="ChefId"> Chef's Name</label>
+            @* Add foreach loop and use ViewBag *@
+            <select asp-for="ChefId">
+                @foreach (Chef eachChef in ViewBag.allChefs)
+                {
+                    <option value="@eachChef.ChefId">@eachChef.FirstName @eachChef.LastName</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label asp-for="Tastiness"></label>
+            <span asp-validation-for="Tastiness"></span>
+            <select asp-for="Tastiness">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <button class="btn btn-outline-danger">Add Dish</button>
+    </form>
+</div>
